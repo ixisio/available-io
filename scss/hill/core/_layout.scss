@@ -1,0 +1,158 @@
+@import 'utilities';
+
+
+
+//
+// Subtracts the defined box spacing from the given width.
+// @param  {Number} $width
+// @return {String} The new width
+//
+@function recalcWidth($width) {
+    // Calculate the possible box count
+    $boxCount: 100 / $width;
+    // One space less than boxes
+    $spacesCount: $boxCount - 1;
+    // Calculate the new witdth minus the space
+    $newWidth: ($width - (($hill-layout-boxes-space * $spacesCount) / $boxCount));
+
+    @return #{$newWidth};
+}
+
+
+
+//
+// Added to reduce css output
+//
+%_floatLeft {
+    float: left;
+}
+
+%_clearfix {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+
+//
+// Generates box width and box min/max css attributes
+//
+@each $width in $hill-layout-boxes {
+    @if ($hill-layout-css-general) {
+        // -> box-100, box-50 ...
+        [#{$hill-layout-attribute-name}*="box-#{$width}"] {
+
+            // Generate boxes without spaces between, if space width is 0%
+            @if(stripUnit($hill-layout-boxes-space) > 0) {
+                width: recalcWidth($width);
+            } @else {
+                width: #{$width + '%'};
+            }
+        }
+    }
+
+    // -> min-100, max-50 ...
+    @if($hill-layout-css-min-max) {
+        [#{$hill-layout-attribute-name}*="min-#{$width}"] {
+            min-width: #{$width + '%'};
+        }
+
+        [#{$hill-layout-attribute-name}*="max-#{$width}"] {
+            max-width: #{$width + '%'};
+        }
+    }
+}
+
+
+
+//
+// Generates space for all boxes
+//
+@if ($hill-layout-css-general or $hill-layout-css-breakpoints) {
+    @if(stripUnit($hill-layout-boxes-space) > 0) {
+        [#{$hill-layout-attribute-name}*="box-"] {
+            &:not(:last-child) {
+                margin-right: #{$hill-layout-boxes-space};
+            }
+        }
+    }
+}
+
+
+
+//
+// Generates box row to float boxes inside
+//
+@if ($hill-layout-css-general) {
+    [#{$hill-layout-attribute-name}*="row"]  {
+        & > [#{$hill-layout-attribute-name}*="box-"] {
+            @extend %_floatLeft;
+        }
+
+        @extend %_clearfix;
+    }
+}
+
+
+
+//
+// Generates box breakpoints with relevant width sizes
+//
+@if ($hill-layout-css-breakpoints) {
+    @each $breakpoint in $hill-layout-breakpoints {
+        $breakpointName: nth($breakpoint, 1);
+
+        // -> box-small-100, box-medium-50 ...
+        @each $width in $hill-layout-boxes {
+            @include deviceIs ($breakpointName) {
+                [#{$hill-layout-attribute-name}*="box-#{$breakpointName}-#{$width}"] {
+                    @if(stripUnit($hill-layout-boxes-space) > 0) {
+                        width: recalcWidth($width);
+                    } @else {
+                        width: #{$width + '%'};
+                    }
+
+                    // Tried to exclude this into a placeholder. But this after that
+                    // this selector is not rendered inside a media query condition
+                    display: block;
+                }
+            };
+        }
+
+        // -> box-small-hide
+        @include deviceIs ($breakpointName) {
+            [#{$hill-layout-attribute-name}*="box-#{$breakpointName}-hide"] {
+                // Tried to exclude this into a placeholder. But this after that
+                // this selector is not rendered inside a media query condition
+                display: none;
+            }
+        }
+    }
+}
+
+
+
+//
+// Generates different layout helpers
+//
+@if ($hill-layout-css-helpers) {
+    [#{$hill-layout-attribute-name}*="space-top"]       { margin-top:    #{$hill-layout-space}; }
+    [#{$hill-layout-attribute-name}*="space-right"]     { margin-right:  #{$hill-layout-space}; }
+    [#{$hill-layout-attribute-name}*="space-bottom"]    { margin-bottom: #{$hill-layout-space}; }
+    [#{$hill-layout-attribute-name}*="space-left"]      { margin-left:   #{$hill-layout-space}; }
+    [#{$hill-layout-attribute-name}*="space-top-2x"]    { margin-top:    #{$hill-layout-space * 2}; }
+    [#{$hill-layout-attribute-name}*="space-right-2x"]  { margin-right:  #{$hill-layout-space * 2}; }
+    [#{$hill-layout-attribute-name}*="space-bottom-2x"] { margin-bottom: #{$hill-layout-space * 2}; }
+    [#{$hill-layout-attribute-name}*="space-left-2x"]   { margin-left:   #{$hill-layout-space * 2}; }
+
+    [#{$hill-layout-attribute-name}*="float-left"]     { @extend  %_floatLeft; }
+    [#{$hill-layout-attribute-name}*="float-right"]    { float:   right; }
+    [#{$hill-layout-attribute-name}*="hide"]           { display: none; }
+    [#{$hill-layout-attribute-name}*="clear"]          { @extend  %_clearfix; }
+}

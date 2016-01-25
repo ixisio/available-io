@@ -1,0 +1,130 @@
+//
+// NOTE: This helpers can used in your code to access the hill functionality/api.
+//       Hill itself depends on this helpers, so do not change this functions
+//
+
+//
+// Return the font size of the given key
+// @param   {String} $property
+// @return  {String} Font size
+// @Example
+//           .example {
+//               font-size: textIs('small')
+//           }
+//
+@function textIs ($property) {
+    @return map-get($hill-text-sizes, $property);
+}
+
+
+
+//
+// Return content with the representive media query wrap
+// @param  {String} $device The device breakpoint definition for the media query
+// @return {CSS}            CSS contents with inside of
+//                          the given media query
+// @Example
+//           // Simple MediaQuery for small screens only
+//           .example {
+//               color: blue;
+//
+//               @include deviceIs(small) {
+//                   color: red;
+//               }
+//           }
+//
+@mixin deviceIs ($device) {
+    @if global-variable-exists(hill-layout-breakpoints) {
+        @if($hill-layout-classes-as-breaktpoints == false) {
+            // Defaults for first parameter and condition
+            $breakpoint: map-get($hill-layout-breakpoints, $device);
+
+            @if (map-get-first-key($hill-layout-breakpoints) == $device) {
+                @media (max-width: #{$breakpoint}) {
+                    @content;
+                }
+            } @else {
+                @media (min-width: #{map-get-previous($hill-layout-breakpoints, $device) + 1}) and
+                       (max-width: #{$breakpoint}) {
+                    @content;
+                }
+            }
+
+        } @else {
+            .device-is--#{$device} {
+                @content;
+            }
+        }
+    }
+}
+
+
+
+//
+// Return content with the representive min width media query wrap
+// @param  {String} $device The device breakpoint definition for the media query
+// @return {CSS}            CSS contents with inside of
+//                          the given media query
+// @Example
+//           // Simple MediaQuery for min small devices
+//           .example {
+//               @include deviceMin(small) {
+//                   color: red;
+//               }
+//           }
+//
+@mixin deviceMin ($device) {
+    @if global-variable-exists(hill-layout-breakpoints) {
+        @media (min-width: #{map-get($hill-layout-breakpoints, $device) + 1}) {
+            @content;
+        }
+    }
+}
+
+
+
+//
+// Return content with the representive max width media query wrap
+// @param  {String} $device The device breakpoint definition for the media query
+// @return {CSS}            CSS contents with inside of
+//                          the given media query
+// @Example
+//           // Simple MediaQuery for max large devices
+//           .example {
+//               @include deviceMax(large) {
+//                   color: red;
+//               }
+//           }
+//
+@mixin deviceMax ($device) {
+    @if global-variable-exists(hill-layout-breakpoints) {
+        @media (max-width: #{map-get($hill-layout-breakpoints, $device)}) {
+            @content;
+        }
+    }
+}
+
+
+
+//
+// Return content with the representive media query wrap between two breakpoints
+// @param  {String} $deviceMin The min device breakpoint definition
+// @param  {String} $deviceMax The max device breakpoint definition
+// @return {CSS}            CSS contents with inside of
+//                          the given media query
+// @Example
+//           // Simple MediaQuery for max large devices
+//           .example {
+//               @include deviceBetween(medium, large) {
+//                   color: red;
+//               }
+//           }
+//
+@mixin deviceBetween ($deviceMin, $deviceMax) {
+    @if global-variable-exists(hill-layout-breakpoints) {
+        @media (min-width: #{map-get($hill-layout-breakpoints, $deviceMin) + 1})
+            and (max-width: #{map-get($hill-layout-breakpoints, $deviceMax)}) {
+            @content;
+        }
+    }
+}

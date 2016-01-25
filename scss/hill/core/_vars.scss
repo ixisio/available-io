@@ -1,0 +1,72 @@
+//
+// HINT: You can overwrite these settings without the `!default` flag in
+// your project custom configuration.
+//
+
+
+// --------------------------------------------------------------- Configuration
+
+
+// Attribute name for html -> <div hill-layout="..."></div>
+$hill-layout-attribute-name: hill-layout !default;
+
+// Attribute name for html -> <a hill-text="..."></a>
+$hill-text-attribute-name: hill-text !default;
+
+// Box width sizes for usage in html -> .."box-50"..
+$hill-layout-boxes: (25, 50, 75, 100) !default;
+
+// Box space definition. Set to 0, if you want to disable spaces between boxes.
+$hill-layout-boxes-space: 2% !default;
+
+// Space definition for usage in html -> .."space-right"..
+// Percentage and rem values can be defined here too.
+$hill-layout-space: 20px !default;
+
+// Breakpoints for html -> .."box-small-100".. and the sass helpers for example
+// the 'deviceIs' helper.
+$hill-layout-breakpoints: (
+    small:  480px,
+    medium: 992px,
+    large:  1280px
+) !default;
+
+// Text sizes for html -> .."small-2x".. and the 'textIs' helper
+$hill-text-sizes: (
+    base:     1rem,
+    small-2x: 0.9rem,
+    small-3x: 0.8rem,
+    large-2x: 1.2rem,
+    large-3x: 1.4rem
+) !default;
+
+
+// -------------------------------------------------------- Output Configuration
+// To configure the output css, overwrite these variables in your custom
+// settings file. For more check out the demo.
+
+
+// General helpers like box width based on '$hill-layout-boxes', which can be
+// used in HTML.
+// Example -> <div hill-layout="box-100"></div>
+$hill-layout-css-general: true !default;
+
+// Layout helpers.
+// Example -> <div hill-layout="space-right"></div>
+$hill-layout-css-helpers: true !default;
+
+// Min and max helpers for box widthes
+// Example -> <div hill-layout="min-50"></div>
+$hill-layout-css-min-max: false !default;
+
+// Breakpoint CSS classes for usage in HTML
+// Example -> <div hill-layout="box-small-50 box-mdeium-75"></div>
+$hill-layout-css-breakpoints: false !default;
+
+// Generate CSS breakpoint classes as wraps like '.device-is--small' instead of
+// media queries
+$hill-layout-classes-as-breaktpoints: false !default;
+
+// Text helpers like 'right, left'.
+// Example -> <div hill-text="right"></div>
+$hill-text-css-helpers: true !default;

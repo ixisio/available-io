@@ -1,0 +1,17 @@
+<% extend 'lib/views/layouts/default' %>
+
+<div class="layout-page" avlb-root>
+    <h1><%- @content.title %></h1>
+
+    <form action="" avlb-register-user>
+        <label for="username">Username</label>
+        <input type="text" id="username">
+
+        <label for="useremail">Email</label>
+        <input type="email" id="useremail">
+
+        <button type="submit" avlb-action-register>Go</button>
+
+        <p style="display: none;" avlb-register-message></p>
+    </form>
+</div>

@@ -1,0 +1,17 @@
+<% extend 'lib/views/layouts/default' %>
+
+<% include 'components/header/_header', {
+    homeUrl: @routes.indexB2C,
+    navButton: {
+        href: @routes.indexB2B,
+        text: @__('Fachhandwerker')
+    },
+    logoText: @__('Wartungswelt'),
+    title: @__('Ups, es ist ein Fehler aufgetreten'),
+    subtitle: @errorMessage,
+    cta: [{
+        text: @__('← Zurück zur Startseite'),
+        href: @routes.indexB2C
+    }],
+    bottomSeparator: false
+} %>
