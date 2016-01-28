@@ -3,5 +3,7 @@
 <div class="layout-page" avlb-root>
     <h1><%- @content.title %></h1>
 
-    <a href="/auth/twitter">Sign in via Twitter</a>
+    <h2>Howdy <%- @user.twitter.displayName %></h2>
+
+    <a href="/logout">Logout</a>
 </div>

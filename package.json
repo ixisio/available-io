@@ -18,8 +18,10 @@
   "dependencies": {
     "async": "^1.5.0",
     "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.1",
     "ect": "^0.5.9",
     "express": "^4.13.3",
+    "express-session": "^1.13.0",
     "grunt": "~0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-cli": "^0.1.13",
@@ -35,6 +37,9 @@
     "jit-grunt": "^0.9.1",
     "jquery": "^2.1.4",
     "mongoose": "^4.3.1",
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.3",
+    "pikaday": "^1.4.0",
     "rivets": "^0.8.1",
     "underscore": "^1.8.3"
   }

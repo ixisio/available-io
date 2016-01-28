@@ -182,8 +182,7 @@ module.exports = function( grunt ) {
         'browserify',
         'pleeease:dev',
         'svg_sprite',
-        'copy:images',
-        'copy:jquery'
+        'copy:images'
     ]);
 
     // Local watch/livereload workflow
@@ -197,8 +196,7 @@ module.exports = function( grunt ) {
         'uglify',
         'pleeease:dist',
         'svg_sprite',
-        'copy:images',
-        'copy:jquery'
+        'copy:images'
     ]);
 
     grunt.registerTask('default', ['dev']);
